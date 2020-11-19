@@ -24,9 +24,7 @@ public class StreamUtils {
 
     public static <K, V> List<String> flatten(Map<K, V> aMap){
         List<String> key = new ArrayList<>();
-        //gets the keys
         aMap.entrySet().stream().forEach(entry -> key.add(entry.getKey().toString()));
-        //gets values
         List<String> values = new ArrayList<>();
         aMap.entrySet().stream().forEach(entry -> values.add(entry.getValue().toString()));
         List<String> flat = new ArrayList<>();
