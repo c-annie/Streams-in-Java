@@ -1,0 +1,38 @@
+import java.lang.reflect.Array;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class StreamUtils {
+
+    public static Collection<String> Capitalized(Collection<String> strings) {
+        Collection<String> cap = strings.stream().map(n -> n.toLowerCase())
+                .sorted(Comparator.comparingInt(String::length))
+                .map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1))
+                .collect(Collectors.toList());
+        return cap;
+    }
+
+    public static String Longest(Collection<String> strings, boolean from_start) {
+        return strings.stream().reduce((string1, string2) -> string1.length() > string2.length() ? string1 : string2.length() > string1.length()
+                ? string2 : from_start ? string1 : string2).get();
+    }
+
+    public static <T extends Comparable<T>> T least(Collection<T> items, boolean from_start) {
+        // boolean ? statement1 : boolean ? statement2: statement3
+        return items.stream().filter(Objects::nonNull).reduce((x,y) -> x.compareTo(y) >= 1 ? y : x.compareTo(y) <=1 ? x : from_start? x:y).get();
+        }
+
+    public static <K, V> List<String> flatten(Map<K, V> aMap){
+        List<String> key = new ArrayList<>();
+        //gets the keys
+        aMap.entrySet().stream().forEach(entry -> key.add(entry.getKey().toString()));
+        //gets values
+        List<String> values = new ArrayList<>();
+        aMap.entrySet().stream().forEach(entry -> values.add(entry.getValue().toString()));
+        List<String> flat = new ArrayList<>();
+        for(int i= 0; i<key.size(); i++) {
+            flat.add(key.get(i) + " -> " + values.get(i));
+        }
+        return flat;
+    }
+}
